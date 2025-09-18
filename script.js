@@ -27,7 +27,7 @@ links.forEach(l => {
                     const duration = parseTimeToSeconds(timeMatch[1]);
                     p.dataset.starttime = formatTime(time);
                     time += duration;
-                    p.dataset.endtime = formatTime(time - 1);
+                    p.dataset.endtime = formatTime(time - 0.1);
                 }
                 else {
                     if (p.innerHTML != '') {
@@ -70,7 +70,7 @@ function updateTimer() {
     paragraphs.forEach(p => {
         const startTime = parseTimeToSeconds(p.dataset.starttime);
         const endTime = parseTimeToSeconds(p.dataset.endtime);
-        if (elapsed >= startTime && elapsed <= endTime) {
+        if (elapsed >= startTime && elapsed < endTime) {
             const progress = (elapsed - startTime) / (endTime - startTime);
             p.style.background = `linear-gradient(to bottom, #e9b70b ${progress * 100}%, #fff176 ${progress * 100}%)`;
             p.scrollIntoView({ behavior: 'smooth', block: 'center' });
