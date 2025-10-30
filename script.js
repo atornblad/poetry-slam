@@ -42,7 +42,15 @@ links.forEach(l => {
     });
 });
 
+const reload = document.getElementById('reload');
+reload.addEventListener('click', (e) => {
+    e.stopPropagation();
+    location.reload();
+});
+
 const timer = document.getElementById('timer');
+const timeDisplay = document.getElementById('time');
+let time = 0;
 let startTime = null;
 let timerInterval = null;
 for (let i = 0; i < paragraphs.length; ++i) {
@@ -65,7 +73,7 @@ function parseTimeToSeconds(timeStr) {
 
 function updateTimer() {
     const elapsed = (Date.now() - startTime) / 1000;
-    timer.textContent = formatTime(Math.floor(elapsed));
+    timeDisplay.textContent = formatTime(Math.floor(elapsed));
 
     paragraphs.forEach(p => {
         const startTime = parseTimeToSeconds(p.dataset.starttime);
@@ -84,14 +92,14 @@ timer.addEventListener('click', () => {
     if (timerInterval) {
         clearInterval(timerInterval);
         timerInterval = null;
-        timer.style.color = '';
-        timer.textContent = formatTime(0);
+        timeDisplay.style.color = '';
+        timeDisplay.textContent = formatTime(0);
         paragraphs[0].scrollIntoView({ behavior: 'smooth', block: 'center' });
         paragraphs.forEach(p => p.style.background = '');
         //location.reload();
     } else {
         startTime = Date.now();
-        timer.style.color = '#ff4444';
+        timeDisplay.style.color = '#ff4444';
         timerInterval = setInterval(updateTimer, 100);
     }
 });
